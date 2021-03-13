@@ -1,6 +1,8 @@
-/node_modules
-/vendor
-.env
-.env.backup
-.vscode
-composer.lock
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/system/bootstrap.php';
+
+use app\Init;
+
+new Init();

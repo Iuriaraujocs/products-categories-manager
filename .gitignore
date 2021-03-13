@@ -1,0 +1,8 @@
+/node_modules
+/vendor
+.env
+.env.backup
+.vscode
+composer.lock
+/system/mvc/views/tmp/cache
+/system/mvc/views/tmp/compile

@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * Funções helpers do system
+ */
+require_once(__DIR__ . '/utils/array.php');
+require_once(__DIR__ . '/utils/coding.php');
+require_once(__DIR__ . '/utils/string.php');
+
+function session_initialize()
+{
+	session_name(md5('app_secure_session_name'.$_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']));
+	session_cache_expire(30);  //expira sessão em 30 minutos
+	if (session_status() == PHP_SESSION_NONE) session_start();
+}
+
+function app_post($name)
+{
+	if (isset($_POST[$name])) return $_POST[$name];
+	return false;
+}
+
+function app_get($name)
+{
+	if (isset($_GET[$name])) return $_GET[$name];
+	return false;
+}
+
+function app_request($name)
+{
+	if (isset($_REQUEST[$name])) return $_REQUEST[$name];
+	return false;
+}
+
+function sanitize_external_data()
+{
+	// $string = htmlspecialchars(strip_tags($_POST['example']));
+	//ou
+	// $string = htmlentities($_POST['example'], ENT_QUOTES, 'UTF-8');
+}
+
+function app_config($filename,$arg = null)   // arg1 = nome do arquivo , config
+{
+	/** Obter configuracoes no diretorio config */
+	$file = APP_PATH . DS . 'config' . DS . $filename . '.php';
+	if(file_exists($file)) $config = require($file);
+	else die('Arquivo de configuração não encontrado');
+	
+	if(is_null($arg) && isset($config) ) return $config;
+	else if(!is_null($arg) && isset($config[$arg]) ) return $config[$arg];
+	return null;
+}
+
+function app_session($name)      //se existir retorna a sessao, se nao, retorna false
+{
+	if (session_status() == PHP_SESSION_NONE) session_start();
+	if (isset($_SESSION[$name])) return $_SESSION[$name];
+	return false;
+}
+
+function app_unsession($name)
+{
+	if (session_status() == PHP_SESSION_NONE) session_start();
+	if (isset($_SESSION[$name])) unset($_SESSION[$name]);
+}
+
+/**
+ * função para limpar o cache do browser
+ *
+ * @return boolean
+ */
+function clearBrowserCache() 
+{
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+	header('Last-Modified: '. gmdate('D, d M Y H:i:s') .' GMT');
+	header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: no-cache');
+	header('Expires: 0');
+
+	return true;
+}
+
+function is_server()
+{
+	$server = $_SERVER['SERVER_NAME'];
+	if ($server != "localhost") return false;  // alterar
+	else return true;
+}
+
+function is_local()
+{
+	$server = $_SERVER['SERVER_NAME'];  //alterar para 127.0.0.1
+	if ($server == "localhost") return false;
+	else return true;
+}
+
+if(!function_exists('app_log')) 
+{
+	//
+}
+
+if(!function_exists('app_path')) 
+{	
+	function app_path($filepath = ''){	
+		return empty($filepath) ? APP_PATH : APP_PATH . DIRECTORY_SEPARATOR . $filepath;
+	}
+}
+
+if(!function_exists('app_https'))
+{
+	/**
+	 * Testa se o https está ativo e caso esteja em http faz um redirect permanente
+	 */
+    function app_https(){
+
+        if($_SERVER['SERVER_PORT'] == '80' && preg_match('/\.php$/', $_SERVER['REQUEST_URI'])) {
+
+            header('HTTP/1.1 301 Moved Permanently');
+            header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            exit();
+        }
+    }
+}
+
+
+
+

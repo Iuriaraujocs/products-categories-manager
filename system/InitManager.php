@@ -16,6 +16,7 @@ class InitManager{
 	protected function run()
 	{
 		// $this->tmpManager();
+        app_set_env();   // Seta os dados definidos em .env para o $_ENV
 		$this->pageContent = Route::getPage($this->urlpatterns);
 		if(is_object($this->pageContent) || is_array($this->pageContent) ) echo json_encode($this->pageContent);
 		else $this->viewControl();

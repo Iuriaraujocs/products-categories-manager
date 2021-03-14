@@ -5,14 +5,16 @@
  */
 return [
 
-	'hostname' => 'localhost',
+	'hostname' => app_get_env('HOSTNAME','localhost'),
+
+    'port' => app_get_env('PORT','3306'),
 	
-	'database' => '',
+	'database' => app_get_env('DATABASE','default-database'),
 	
-	'charset' => '',
+	'charset' => app_get_env('CHARSET','UTF-8'),
 	
-	'username' => 'root',
+	'username' => app_get_env('USERNAME','root'),
 	
-	'password' => '01ica!',
+	'password' => app_get_env('PASSWORD','01ica!'),
 
 ];

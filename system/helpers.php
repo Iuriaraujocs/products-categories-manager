@@ -45,7 +45,7 @@ function app_config($filename,$arg = null)   // arg1 = nome do arquivo , config
 	$file = APP_PATH . DS . 'config' . DS . $filename . '.php';
 	if(file_exists($file)) $config = require($file);
 	else die('Arquivo de configuração não encontrado');
-	
+
 	if(is_null($arg) && isset($config) ) return $config;
 	else if(!is_null($arg) && isset($config[$arg]) ) return $config[$arg];
 	return null;
@@ -69,7 +69,7 @@ function app_unsession($name)
  *
  * @return boolean
  */
-function clearBrowserCache() 
+function clearBrowserCache()
 {
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Last-Modified: '. gmdate('D, d M Y H:i:s') .' GMT');
@@ -94,19 +94,19 @@ function is_local()
 	else return true;
 }
 
-if(!function_exists('app_log')) 
+if(!function_exists('app_log'))
 {
     function app_log($message = '', $type = 'INFO'){
         $type = strtoupper($type);
         $format = "[%datetime%] %channel%.%level_name%: %message%\n";
-        
+
         $log = new Monolog\Logger('app');
         $formatter = new Monolog\Formatter\LineFormatter($format);
         $streamHandle = new Monolog\Handler\StreamHandler(LOG_PATH . '/app.log');
 
         $streamHandle->setFormatter($formatter);
         $log->pushHandler($streamHandle);
-        
+
         switch ($type) {
             case 'DEBUG':
                 $log->addDebug($message);
@@ -116,17 +116,35 @@ if(!function_exists('app_log'))
                 break;
             case 'ERROR':
                 $log->addError($message);
-                break;    
+                break;
             default:
                 $log->addInfo($message);
                 break;
-        }  
+        }
     }
 }
 
-if(!function_exists('app_path')) 
-{	
-	function app_path($filepath = ''){	
+if(!function_exists('app_get_env'))
+{
+    function app_get_env($key,$default = null){
+        return $_ENV[$key] ?? $default;
+    }
+}
+
+if(!function_exists('app_set_env'))
+{
+    function app_set_env(){
+        $Loader = new josegonzalez\Dotenv\Loader( APP_PATH.'/.env');
+        // Parse the .env file
+        $Loader->parse();
+        // Send the parsed .env file to the $_ENV variable
+        $Loader->toEnv();
+    }
+}
+
+if(!function_exists('app_path'))
+{
+	function app_path($filepath = ''){
 		return empty($filepath) ? APP_PATH : APP_PATH . DIRECTORY_SEPARATOR . $filepath;
 	}
 }

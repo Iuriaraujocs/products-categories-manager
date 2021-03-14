@@ -7,5 +7,13 @@
 	  <span>go@jumpers.com.br</span>
 	</div>
 </footer>
- <!-- Footer --></body>
+ <!-- Footer -->
+
+<script src="/resources/assets/libs/js/jquery/jquery-3.6.0.min.js"></script>
+
+<script src="/resources/assets/libs/js/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="/resources/assets/js/script.js"></script>
+
+</body>
 </html>

@@ -5,6 +5,9 @@
   <meta charset="utf-8">
 
 <link  rel="stylesheet" type="text/css"  media="all" href="/resources/assets/css/style.css" />
+
+<link  rel="stylesheet" type="text/css"  href="/resources/assets/libs/css/sweetalert2/sweetalert2.min.css" />
+
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800" rel="stylesheet">
 <meta name="viewport" content="width=device-width,minimum-scale=1">
 

@@ -6,7 +6,7 @@
   <main class="content">
     <h1 class="title new-item">New Product</h1>
     
-    <form>
+    <form id='id-form-save-product'>
       <div class="input-field">
         <label for="sku" class="label">Product SKU</label>
         <input type="text" id="sku" class="input-text" /> 

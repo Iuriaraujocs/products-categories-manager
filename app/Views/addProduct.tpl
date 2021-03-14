@@ -9,36 +9,40 @@
     <form id='id-form-save-product'>
       <div class="input-field">
         <label for="sku" class="label">Product SKU</label>
-        <input type="text" id="sku" class="input-text" /> 
+        <input id='id-sku' type="text" id="sku" class="input-text" required /> 
       </div>
       <div class="input-field">
         <label for="name" class="label">Product Name</label>
-        <input type="text" id="name" class="input-text" /> 
+        <input type="text" id="id-name" class="input-text" required/> 
       </div>
       <div class="input-field">
         <label for="price" class="label">Price</label>
-        <input type="text" id="price" class="input-text" /> 
+        <input type="text" id="id-price" class="input-text" required /> 
       </div>
       <div class="input-field">
         <label for="quantity" class="label">Quantity</label>
-        <input type="text" id="quantity" class="input-text" /> 
+        <input type="text" id="id-quantity" class="input-text" required/> 
       </div>
       <div class="input-field">
         <label for="category" class="label">Categories</label>
-        <select multiple id="category" class="input-text">
-          <option>Category 1</option>
-          <option>Category 2</option>
-          <option>Category 3</option>
-          <option>Category 4</option>
+        <select multiple id="id-category" class="input-text" required>
+          
+            {foreach name=categories from=$category key=id item=name}
+	            <option value="{$id}" 
+                    {if $smarty.foreach.categories.first}selected{/if}>
+                    {$name}
+                </option>
+            {/foreach}
+          
         </select>
       </div>
       <div class="input-field">
         <label for="description" class="label">Description</label>
-        <textarea id="description" class="input-text"></textarea>
+        <textarea id="id-description" class="input-text" required></textarea>
       </div>
       <div class="actions-form">
         <a href="products" class="action back">Back</a>
-        <input class="btn-submit btn-action" type="submit" value="Save Product" />
+        <button id='id-button-submit-product' class="btn-submit btn-action" type="submit">Save Product</button>
       </div>
       
     </form>

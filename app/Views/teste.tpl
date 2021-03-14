@@ -1,1 +1,0 @@
-o teste do tpl pela controller

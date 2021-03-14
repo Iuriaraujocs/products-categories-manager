@@ -44,7 +44,7 @@ class BaseController
 		foreach ($params as $key => $value) {
 			$smarty->assign($key, $value);
 		}
-		return $smarty->fetch($template);
+		return $smarty->fetch($template . '.tpl');
 	}
 
 	protected function jsonResponse()

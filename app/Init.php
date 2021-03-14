@@ -14,7 +14,12 @@ class Init extends InitManager
 	public function __construct()
 	{
 		$this->urlpatterns = array(
-			'' => 'app\Controllers\Teste',   //url, controller, action
+			'' => 'app\Controllers\Product',   //url, controller, action
+            'dashboard' => 'app\Controllers\Product',   //url, controller, action
+            'products' => 'app\Controllers\Product@products',
+            'categories' => 'app\Controllers\Product@categories',
+            'addProduct' => 'app\Controllers\Product@addProduct',
+            'addCategory' => 'app\Controllers\Product@addCategory',
 			);
 
 		$this->run();

@@ -13,8 +13,8 @@ class BaseController
 		if(array_key_exists($key, $_REQUEST) && (is_numeric($_REQUEST[$key]) || !empty($_REQUEST[$key]))) {
 			return $_REQUEST[$key];
 		}
-		elseif(array_key_exists($key, $this->vars)){
-            return $this->vars[$key];	
+		elseif(array_key_exists($key, $_REQUEST)){
+            return $_REQUEST[$key];	
 		}
 		
 		return $default;
@@ -52,7 +52,7 @@ class BaseController
         $response = [
             'success' => true,
             'code'    => 200,
-            'data'    => json_encode($data),
+            'data'    => $data,
             'datetime' => date('d-m-Y G:i:s')
             // 'method'  => $this->method,
         ];
@@ -70,6 +70,7 @@ class BaseController
             // 'method'  => $this->method,
         ];
         header('Content-Type: application/json');
+        http_response_code(500); //força o code da resposta para 500
         echo json_encode($response);
 	}
 

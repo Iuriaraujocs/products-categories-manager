@@ -27,7 +27,7 @@ $sql[3] = "CREATE TABLE `{$database}`.`products` (
 $sql[4] = "DROP TABLE IF EXISTS `categories`";	
 $sql[5] = "CREATE TABLE `{$database}`.`categories` (
         `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        `code` VARCHAR(45) NOT NULL,
+        `code` VARCHAR(50) NOT NULL,
         `name` VARCHAR(45) NOT NULL,
         PRIMARY KEY (`id`),
         UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
@@ -36,7 +36,7 @@ $sql[5] = "CREATE TABLE `{$database}`.`categories` (
         DEFAULT CHARACTER SET = utf8;";
 
 $sql[6] = "DROP TABLE IF EXISTS `products_vs_categories`";	
-$sql[7] = "CREATE TABLE `webjump`.`products_vs_categories` (
+$sql[7] = "CREATE TABLE `{$database}`.`products_vs_categories` (
         `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         `id_categories` BIGINT(20) UNSIGNED NOT NULL,
         `id_products` BIGINT(20) UNSIGNED NOT NULL,
@@ -46,12 +46,12 @@ $sql[7] = "CREATE TABLE `webjump`.`products_vs_categories` (
         INDEX `fk_products_idx` (`id_products` ASC) VISIBLE,
         CONSTRAINT `fk_categories`
             FOREIGN KEY (`id_categories`)
-            REFERENCES `webjump`.`categories` (`id`)
+            REFERENCES `{$database}`.`categories` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
         CONSTRAINT `fk_products`
             FOREIGN KEY (`id_products`)
-            REFERENCES `webjump`.`products` (`id`)
+            REFERENCES `{$database}`.`products` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE)
         ENGINE = InnoDB

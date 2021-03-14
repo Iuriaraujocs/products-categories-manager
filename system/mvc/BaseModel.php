@@ -22,7 +22,7 @@ class BaseModel extends Persistence
 	//para um
 	private $data = [];
 
-	private $columns = [];
+	private $columns = false;
 	
 	/** vetor de statments where */
 	private $where = [];
@@ -53,6 +53,11 @@ class BaseModel extends Persistence
 		$this->data[$name] = $value;
 	}
 
+    public function getColumns()
+    {
+        return $this->data;
+    }
+
 	public function all()
 	{
 		$query = "SELECT * FROM `{$this->database}`.`$this->table`";
@@ -75,13 +80,20 @@ class BaseModel extends Persistence
 		$lastId = $this->getLastIdInserted();
 
 		//Não persiste no banco, precisa de um save antes;
-		if(empty($model)) $this->data[$this->primaryKey] = $lastId + 1; 
+		if(empty($model)) {
+            // $this->data[$this->primaryKey] = $lastId + 1; 
+            return $this;
+        } 
+        else return $model;
 	}
 
 	public function getLastIdInserted()
 	{
 		$query = "SELECT {$this->primaryKey} FROM `{$this->database}`.`$this->table` ORDER BY `$this->table`.`{$this->primaryKey}` DESC LIMIT 1";
-		return $this->selectApply($query)[0][$this->primaryKey];
+		$result = $this->selectApply($query);
+
+        $teste = $result[0][$this->primaryKey] ?? $result[$this->primaryKey] ?? 0;
+        return $result[0][$this->primaryKey] ?? $result[$this->primaryKey] ?? 0;
 	}
 
 	public function save()
@@ -199,14 +211,13 @@ class BaseModel extends Persistence
 		/** inclui limit by caso haja */
 		$query = $this->limit ? "{$query} LIMIT {$this->LIMIT}" : $query;
 
-		// return $this->selectApply($query,$this->whereBind);
-		echo $query;
+		return $this->selectApply($query,$this->whereBind);
 	}
 
 	public function first()
 	{
 		$data = $this->get();
-		if(is_array($data)) $data = $data[0];
+		if(is_array($data) && !empty($data)) $data = $data[0];
 		return $data;
 	}
 

@@ -96,7 +96,32 @@ function is_local()
 
 if(!function_exists('app_log')) 
 {
-	//
+    function app_log($message = '', $type = 'INFO'){
+        $type = strtoupper($type);
+        $format = "[%datetime%] %channel%.%level_name%: %message%\n";
+        
+        $log = new Monolog\Logger('app');
+        $formatter = new Monolog\Formatter\LineFormatter($format);
+        $streamHandle = new Monolog\Handler\StreamHandler(LOG_PATH . '/app.log');
+
+        $streamHandle->setFormatter($formatter);
+        $log->pushHandler($streamHandle);
+        
+        switch ($type) {
+            case 'DEBUG':
+                $log->addDebug($message);
+                break;
+            case 'WARNING':
+                $log->addWarning($message);
+                break;
+            case 'ERROR':
+                $log->addError($message);
+                break;    
+            default:
+                $log->addInfo($message);
+                break;
+        }  
+    }
 }
 
 if(!function_exists('app_path')) 

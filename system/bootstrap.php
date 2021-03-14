@@ -5,7 +5,9 @@
 //define('APP_DEBUG', true);
 define('APP_PATH', __DIR__ . "/.." );
 
-define('SYSTEM_PATH', dirname(__FILE__));
+define('SYSTEM_PATH', __DIR__);
+
+define('LOG_PATH', __DIR__ . "/../storage/logs");
 
 define('DS', DIRECTORY_SEPARATOR);
 //------------------------------------------------------------------------------

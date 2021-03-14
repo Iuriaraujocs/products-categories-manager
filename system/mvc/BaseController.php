@@ -47,20 +47,30 @@ class BaseController
 		return $smarty->fetch($template . '.tpl');
 	}
 
-	protected function jsonResponse()
+	protected function jsonResponse($data = [])
 	{
-		// code
-		// success - true
-		// method - 
-		// data - 
-		// datetime -
+        $response = [
+            'success' => true,
+            'code'    => 200,
+            'data'    => json_encode($data),
+            'datetime' => date('d-m-Y G:i:s')
+            // 'method'  => $this->method,
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($response);
+	}
 
-
-		// code
-		// success - false
-		// method
-		// msg - e->getMessage()
-		// datetime
+    protected function errorResponse($message = 'error in response')
+	{
+        $response = [
+            'success' => false,
+            'code'    => 500,
+            'msg'     => $message,
+            'datetime' => date('d-m-Y G:i:s')
+            // 'method'  => $this->method,
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($response);
 	}
 
 	protected function redirectPage($url)

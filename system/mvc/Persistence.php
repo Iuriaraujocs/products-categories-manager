@@ -19,8 +19,13 @@ class Persistence
 			// $this->startTransaction();
 
 		} catch (PDOException $e) {
-			echo 'ERROR: ' . $e->getMessage();
-			die();
+
+            try {  //caso o erro de unknown database, tenta sem o parametro de database
+                $this->conn = new PDO('mysql:host='. $conn['hostname'] . ';charset=utf8', $conn['username'], $conn['password'], array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            } catch (\PDOException $e) {
+                echo 'ERROR: ' . $e->getMessage();
+                die();
+            }
 		}
 	}
 

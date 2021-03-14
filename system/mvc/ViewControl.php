@@ -19,7 +19,7 @@ class ViewControl extends Smarty
         $this->setCompileDir(__DIR__ . DS . 'views' . DS . 'tmp' . DS . 'compile' . DS);
         $this->setCacheDir(__DIR__ . DS . 'views' . DS . 'tmp' . DS . 'cache' . DS);
  
-		$this->debugging = true;
+		// $this->debugging = true;
     }
 
 }

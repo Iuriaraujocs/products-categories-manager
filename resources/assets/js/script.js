@@ -69,28 +69,35 @@ function saveCategory(e){
 function saveProduct(e){
     e.preventDefault();
     // --------------------------------
-
+    var fd = new FormData();
+  
     var sku = $('#id-sku').val();
     var name = $('#id-name').val();
     var price = $('#id-price').val();
     var quantity = $('#id-quantity').val();
-
     var category = $('#id-category').val();
     var description = $('#id-description').val();
+
+    
+    var files = $('#id-image-product')[0].files;
+    
+    // Check file selected or not
+    if(files.length > 0 ) fd.append('imgProduct',files[0]);
+
+    fd.append('sku',sku);
+    fd.append('name',name);
+    fd.append('price',price);
+    fd.append('quantity',quantity);
+    fd.append('category',category);
+    fd.append('description',description);
 
     APP.loading('id-button-submit-product');
     $.ajax({
         type: 'POST',
         url: '/addProduct',
-        data: {
-            _token: 'teste',
-            sku: sku,
-            name: name,
-            price: price,
-            quantity: quantity,
-            category: category,
-            description: description
-         }
+        data: fd,
+        contentType: false,
+        processData: false,
      })
      .done(function(response){
          APP.flash(
@@ -100,7 +107,6 @@ function saveProduct(e){
            );
      })
      .fail(function(response){
-         console.log(response);
         APP.flash(
             'Error',
             APP.messageError(response),

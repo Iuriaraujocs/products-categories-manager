@@ -10,39 +10,36 @@ class Product extends BaseController
 {
 	public function index()
 	{
-        return $this->view('dashboard');
+        $product = new ProductModel();
+
+        return $this->view('dashboard',['product' => $product->all()]);
 	}
 
     public function products()
 	{
-        return $this->view('products');
+        $product = new ProductModel();
+        return $this->view('products',['product' => $product->getAll()]);
 	}
 
     public function categories()
 	{
-        return $this->view('categories');
+        $category = new Category();
+        return $this->view('categories',['category' => $category->all()]);
 	}
 
     public function addProduct()
 	{
+        //Se acessado via ajax e post
         if($this->isPost() && $this->isXmlHttpRequest()){
-
             try {
-                $product = new ProductModel();
-                $product->sku = $this->request('sku');
-                $product->name = $this->request('name');
-                $product->price = $this->request('price');
-                $product->amount = $this->request('quantity');
-                $product->description = $this->request('description');
-
-                $categories = $this->request('category');
-
+                list($product,$categories) = $this->getProductsInfo();
+                
+                /** Garante que o produto já está cadastrado */
                 if($product->verifyIfCodeExist()) return $this->errorResponse('SKU de produto já cadastrado!');
                
+                /** Salva o produto e seu relacionamento com as categorias */
                 $product->save();
-      
                 $product->addProductsVsCategories($categories, $product->getColumns()['sku']);
-
                 return $this->jsonResponse(['msg' => 'Produto cadastrado com sucesso!']);
 
             } catch (\Exception $e) {
@@ -51,8 +48,8 @@ class Product extends BaseController
             return $this->jsonResponse(['teste'=>'enviou', 'teste2' => 'testou']);    
         }
 
+        //Se acessado pelo browser
         $category = new Category();
-
         return $this->view('addProduct', ['category' => $category->getAll()]);
 	}
 
@@ -80,14 +77,35 @@ class Product extends BaseController
         return $this->view('addCategory');
 	}
 
-    public function send()
+    public function sendImage($id)
 	{
-        $file = APP_PATH . '/resources/assets/images/menu-go-jumpers.png';
-        $type = 'image/png';
-        header('Content-Type:'.$type);
-        header('Content-Length: ' . filesize($file));
-        readfile($file);
+        $id = $id[0];
+        $product = new ProductModel();
+        
+        $file = $product->addColumns(['img_path'])
+        ->where('id',$id)->first()['img_path'];
+
+        $this->sendImageResponse($file);
 	}
+
+    private function getProductsInfo(){
+        $product = new ProductModel();
+        $product->sku = $this->request('sku');
+        $product->name = $this->request('name');
+        $product->price = $this->request('price');
+        $product->amount = $this->request('quantity');
+        $product->description = $this->request('description');
+
+        $imageInfo = app_upload_img('imgProduct');
+        if(!$imageInfo) $product->img_path = APP_PATH . DS . 'resources' . DS . 'assets' . DS . 'images' . DS . 'empty_image.png';
+        else $product->img_path = $imageInfo['filename'];
+
+        $categories = $this->request('category');
+        $categories = explode(',', $categories);
+        
+        return [$product,$categories];
+
+    }
 
 }
 

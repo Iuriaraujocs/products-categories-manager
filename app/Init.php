@@ -20,6 +20,8 @@ class Init extends InitManager
             'categories' => 'app\Controllers\Product@categories',
             'addProduct' => 'app\Controllers\Product@addProduct',
             'addCategory' => 'app\Controllers\Product@addCategory',
+            
+            'product-send-image/{$id}' => 'app\Controllers\Product@sendImage'
 			);
 
 		$this->run();

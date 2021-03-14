@@ -165,6 +165,37 @@ if(!function_exists('app_https'))
     }
 }
 
+if(!function_exists('app_upload_img'))
+{
+    function app_upload_img($key){
+
+        if (isset($_FILES[$key]) && file_exists($_FILES[$key]['tmp_name'])) { 
+			
+            $data = ['status' => false];
+			$targetFile = basename($_FILES[$key]['name']);          //retorna o nome do arquivo com a extensao
+
+			$fileType = pathinfo($targetFile, PATHINFO_EXTENSION);    //retorna a extensão do arquivo
+            // Converte a extensão para minúsculo
+            $fileType = strtolower ( $fileType );
+ 
+            // Somente imagens, .jpg;.jpeg;.gif;.png
+            if (!strstr( '.jpg;.jpeg;.gif;.png', $fileType ) ) return false;
+            
+            $isImage = getimagesize($_FILES[$key]['tmp_name']);
+
+			if ($isImage !== false) {
+				$data['image'] = md5(rand(1,10) . time()) . '.' . $fileType;        //nome randomico para a imagem a ser salva no servidor para não ocorrer nomes parecidos
+				$data['pathFolder'] = APP_UPLOAD_PATH;
+				$data['extension'] = $fileType;
+				$data['filename'] = $data['pathFolder'] . DS . $data['image'];
+
+				if (move_uploaded_file($_FILES[$key]['tmp_name'], $data['filename'])) return $data;
+				else return false;
+			}
+		}
+
+    }
+}
 
 
 

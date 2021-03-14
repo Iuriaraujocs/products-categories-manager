@@ -9,6 +9,8 @@ define('SYSTEM_PATH', __DIR__);
 
 define('LOG_PATH', __DIR__ . "/../storage/logs");
 
+define('APP_UPLOAD_PATH', __DIR__ . "/../storage/uploads");
+
 define('DS', DIRECTORY_SEPARATOR);
 //------------------------------------------------------------------------------
 // Includes

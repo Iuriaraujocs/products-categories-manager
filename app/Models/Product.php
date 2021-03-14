@@ -3,6 +3,7 @@
 namespace app\Models;
 
 use system\mvc\BaseModel;
+use app\Models\Category;
 
 class Product extends BaseModel
 {
@@ -14,7 +15,6 @@ class Product extends BaseModel
     }
 
     public function verifyIfCodeExist(){
-
         $exist =  $this->addColumns(['id'])
                  ->where('sku',$this->getColumns()['sku'])
                  ->first();
@@ -22,12 +22,39 @@ class Product extends BaseModel
          return !empty($exist) ? true : false;
      }
 
-     public function addProductsVsCategories($idCategories, $sku){
+    public function addProductsVsCategories($idCategories, $sku){
 
         $idProduct = $this->addColumns(['id'])
         ->where('sku',$sku)->first()['id'];
         
-        foreach($idCategories as $idCategory) 
-            $this->queryBuilder("INSERT INTO `{$this->database}`.`products_vs_categories` (id_categories,id_products) VALUES (?,?)",[$idCategory,$idProduct]);
-     }
+        if(is_array($idCategories)){
+            foreach($idCategories as $idCategory) 
+                $this->queryBuilder("INSERT INTO `{$this->database}`.`products_vs_categories` (id_category,id_product) VALUES (?,?)",[$idCategory,$idProduct]);
+        }
+        else  $this->queryBuilder("INSERT INTO `{$this->database}`.`products_vs_categories` (id_category,id_product) VALUES (?,?)",[$idCategories,$idProduct]);
+    }
+
+    public function getCategories($idProduct){
+        $sql = "SELECT * FROM `{$this->database}`.`categories` c
+                LEFT JOIN `{$this->database}`.`products_vs_categories` pc
+                on  c.id = pc.id_category
+                where pc.id_product = ?";
+
+        return $this->selectApply($sql,[$idProduct]);
+    }
+
+    public function getAll(){
+        $products = $this->all();
+
+        foreach($products as &$product){
+            $sql = "SELECT * FROM `{$this->database}`.`categories` c
+                    LEFT JOIN `{$this->database}`.`products_vs_categories` pc
+                    on  c.id = pc.id_category
+                    where pc.id_product = ?";
+    
+            $product['categories'] = $this->selectApply($sql,[$product['id']]);
+        }
+
+        return $products;
+    }
 }

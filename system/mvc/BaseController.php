@@ -79,6 +79,14 @@ class BaseController
 		header("Location: $url");
 	}
 
+    protected function sendImageResponse($file)
+    {
+        $type = 'image/png';
+        header('Content-Type:'.$type);
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+    }
+
 	protected function addController($class, $action = '', $params = null)       //call_user_func_array()       funcao(...$array)
 	{
 		$return = null;

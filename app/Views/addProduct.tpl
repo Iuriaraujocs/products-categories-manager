@@ -15,6 +15,11 @@
         <label for="name" class="label">Product Name</label>
         <input type="text" id="id-name" class="input-text" required/> 
       </div>
+      
+        <div class="input-field">
+            <label for="name" class="label">Image do Produto</label>
+            <input id='id-image-product' name="imgProduct" type="file" style='margin-top:13px;'/>
+        </div>
       <div class="input-field">
         <label for="price" class="label">Price</label>
         <input type="text" id="id-price" class="input-text" required /> 

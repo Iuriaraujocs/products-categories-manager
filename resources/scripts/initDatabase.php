@@ -16,6 +16,7 @@ $sql[3] = "CREATE TABLE `{$database}`.`products` (
         `price` DECIMAL(15,2) NOT NULL DEFAULT 00.00,
         `description` VARCHAR(100) NOT NULL,
         `amount` INT NOT NULL,
+        `img_path` VARCHAR(100), 
         `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`),
@@ -38,19 +39,19 @@ $sql[5] = "CREATE TABLE `{$database}`.`categories` (
 $sql[6] = "DROP TABLE IF EXISTS `products_vs_categories`";	
 $sql[7] = "CREATE TABLE `{$database}`.`products_vs_categories` (
         `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        `id_categories` BIGINT(20) UNSIGNED NOT NULL,
-        `id_products` BIGINT(20) UNSIGNED NOT NULL,
+        `id_category` BIGINT(20) UNSIGNED NOT NULL,
+        `id_product` BIGINT(20) UNSIGNED NOT NULL,
         PRIMARY KEY (`id`),
         UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-        INDEX `fk_categories_idx` (`id_categories` ASC) VISIBLE,
-        INDEX `fk_products_idx` (`id_products` ASC) VISIBLE,
-        CONSTRAINT `fk_categories`
-            FOREIGN KEY (`id_categories`)
+        INDEX `fk_category_idx` (`id_category` ASC) VISIBLE,
+        INDEX `fk_product_idx` (`id_product` ASC) VISIBLE,
+        CONSTRAINT `fk_category`
+            FOREIGN KEY (`id_category`)
             REFERENCES `{$database}`.`categories` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
-        CONSTRAINT `fk_products`
-            FOREIGN KEY (`id_products`)
+        CONSTRAINT `fk_product`
+            FOREIGN KEY (`id_product`)
             REFERENCES `{$database}`.`products` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE)

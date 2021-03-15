@@ -1,9 +1,11 @@
 <?php
-
+/**
+ * @author Iuri Cardoso Araújo 
+ */
 namespace system\mvc;
 
 use Smarty;
-
+/** Configuração do template engine Smarty */
 class ViewControl extends Smarty
 {
 	public $pathTemplate;

@@ -48,21 +48,21 @@ function saveCategory(e){
      })
      .done(function(response){
          APP.flash(
-             'Good job!',
-             'You clicked the button!',
+             'Salvo!',
+             response.data.msg,
              'success'
            );
      })
      .fail(function(response){
         APP.flash(
-            'Good job!',
-            'You clicked the button!',
+            'Error',
+            APP.messageError(response),
             'error'
           );
      })
      .always(function(){
         APP.loading('id-button-submit-category','off');
-        // setInterval(function(){ alert("Hello"); }, 3000);
+        setInterval(function(){ window.location.href = "/dashboard"; }, 3000);
      });
 
 }
@@ -115,7 +115,7 @@ function saveProduct(e){
      })
      .always(function(){
         APP.loading('id-button-submit-product','off');
-        // setInterval(function(){ alert("Hello"); }, 3000);
+        setInterval(function(){ window.location.href = "/dashboard"; }, 3000);
      });
 
 }

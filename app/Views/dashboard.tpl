@@ -9,7 +9,7 @@
         </div>
     
         <div class="infor">
-            You have 4 products added on this store: <a href="addProduct" class="btn-action">Add new Product</a>
+            You have {$countProducts} products added on this store: <a href="addProduct" class="btn-action">Add new Product</a>
         </div>
         
         <ul class="product-list">

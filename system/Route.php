@@ -1,7 +1,8 @@
 <?php
-
+/**
+ * @author Iuri Cardoso Araújo 
+ */
 namespace system;
-
 /**
  * Classe responsável capturar a url amigável, e chamar a respectiva controller e action relacionada 
  */

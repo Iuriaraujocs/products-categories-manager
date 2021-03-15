@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @author Iuri Cardoso Araújo 
+ */
 namespace system\mvc;
 
 use system\mvc\Persistence;
@@ -58,6 +60,11 @@ class BaseModel extends Persistence
         return $this->data;
     }
 
+    public function setColumn($column,$value)
+    {
+        $this->data[$column] = $value;
+    }
+    
 	public function all()
 	{
 		$query = "SELECT * FROM `{$this->database}`.`$this->table`";

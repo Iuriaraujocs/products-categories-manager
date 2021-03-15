@@ -1,10 +1,13 @@
 <?php
-
+/**
+ * @author Iuri Cardoso Araújo 
+ */
 namespace system\mvc;
 
 use \PDO;
 use PDOException;
 
+/** Classe que auxilia na conexão e aplicação de queries no banco de dados */
 class Persistence
 {
 	private $conn;

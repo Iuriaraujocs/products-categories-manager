@@ -1,9 +1,12 @@
 <?php
-
+/**
+ * @author Iuri Cardoso Araújo 
+ */
 namespace system\mvc;
 
 use Smarty;
 
+/** Classe base que implementa métodos clássicos de uma Controller */
 class BaseController
 {
 	protected $extraJson = [];

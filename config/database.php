@@ -9,12 +9,12 @@ return [
 
     'port' => app_get_env('PORT','3306'),
 	
-	'database' => app_get_env('DATABASE','default-database'),
+	'database' => app_get_env('DATABASE','webjump-desafio-iuri-araujo'),
 	
 	'charset' => app_get_env('CHARSET','UTF-8'),
 	
 	'username' => app_get_env('USERNAME','root'),
 	
-	'password' => app_get_env('PASSWORD','01ica!'),
+	'password' => app_get_env('PASSWORD','12345'),
 
 ];

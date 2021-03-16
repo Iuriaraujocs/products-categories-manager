@@ -1,0 +1,17 @@
+{
+    "name": "iuriaraujocs/webjump-teste",
+    "description": "Teste para webjump",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+		"monolog/monolog": "1.0.*",
+        "josegonzalez/dotenv": "3.2.*",
+		"smarty/smarty": "~3.1"
+	},
+ "autoload": {
+        "psr-4": {
+			"app\\": "app/",
+			"system\\": "system/"
+		}
+    }
+}
